@@ -1,1 +1,67 @@
+# CI/CD Pipeline — MyTax Receipt Logger UI
+# Trigger: every push to the main branch (and the manual "Run workflow" button)
+#
+# Job 1 (CI)  — verifies the code: required files exist, JSX compiles cleanly
+# Job 2 (CD)  — deploys the UI to GitHub Pages, but ONLY if Job 1 passed
+#
 
+
+name: CI-CD Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  ci-build-check:
+    name: CI — Build verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Verify required files exist
+        run: |
+          test -f index.html && echo "index.html found"
+          test -f app.js && echo "app.js found"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Compile-check the React (JSX) code with Babel
+        run: |
+          npm install --no-save @babel/core @babel/cli @babel/preset-react
+          npx babel app.js --presets @babel/preset-react -o compiled-check.js
+          node --check compiled-check.js
+          echo "JSX compiles cleanly — build check passed"
+
+  cd-deploy:
+    name: CD — Deploy to GitHub Pages
+    needs: ci-build-check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
