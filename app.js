@@ -231,7 +231,7 @@ function AuthPage({ onLogin, notify }) {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-ink text-white display text-2xl font-bold mb-3">M</div>
           <h1 className="text-3xl font-bold ink">MyTax Receipt Logger</h1>
-          <p className="text-slate-500 mt-1 text-sm">Keep every tax relief receipt safe for 7 years — as LHDN requires.</p>
+          <p className="text-slate-500 mt-1 text-sm">Keep every tax relief receipt safe for 7 years — as LHDN require.</p>
         </div>
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
           <div className="flex rounded-lg bg-slate-100 p-1 mb-6">
