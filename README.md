@@ -50,6 +50,6 @@ For local testing:
 1. Download the MyTax-Receipt-Logger-main.zip
 2. Extract the files to directory
 3. Install Node.js https://nodejs.org/en/download 
-4. Navigate to the folder containing the extracted file for MyTax-Receipt-Logger-main.zip
+4. Launch cmd or powershell and navigate to the folder containing the extracted file for MyTax-Receipt-Logger-main.zip
 5. Run: npx serve
 6. Then open the printed `http://localhost:3000` address on your browser.
